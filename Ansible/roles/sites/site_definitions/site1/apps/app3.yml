@@ -1,0 +1,6 @@
+app_name: app3
+app_dest: '{{ site_path }}\{{ app_name }}'
+app_pool: '{{ pool_4_64.info.name }}'
+app_repo: https://github.com/twitter/twitter.github.com.git
+app_branch: master
+top_level: true

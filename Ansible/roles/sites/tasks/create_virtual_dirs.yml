@@ -1,0 +1,13 @@
+# Set up the physical directory
+- name: Create physical directory
+  win_file:
+    path: '{{ dir_path }}'
+    state: directory
+
+# Add directory as a virtual path in IIS
+- name: Create IIS virtual directory
+  win_iis_virtualdirectory:
+    name: '{{ dir_name }}'
+    site: '{{ site_name }}'
+    physical_path: '{{ dir_path }}'
+    state: present

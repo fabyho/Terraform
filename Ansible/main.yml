@@ -1,0 +1,12 @@
+# Set up the webservers then create sites on them
+- name: Configure IIS web server
+  hosts: vm-web01
+  roles:
+    - iis
+    - sites
+    
+ - name: Configure IIS web server
+  hosts: vm-web02
+  roles:
+    - iis
+    - sites   

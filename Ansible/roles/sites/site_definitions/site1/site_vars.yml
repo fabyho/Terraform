@@ -1,0 +1,23 @@
+# Site information
+site_path: '{{ root_path }}\{{ site_name }}'
+ip_addr: 127.0.0.1
+port_no: 80
+host_name: site1.kent.edu
+
+# Virtual directory information
+virtual_dirs:
+  - 
+    name: dir1
+    path: '{{ site_path }}\dir1'
+  - 
+    name: dir2
+    path: '{{ site_path }}\dir2'
+
+# Applications
+apps_path: roles/sites/site_definitions/{{ site_name }}/apps
+apps:
+  - app1.yml
+  - app2.yml
+  - app3.yml
+  - dir1_app2.yml
+  - dir2_app3.yml

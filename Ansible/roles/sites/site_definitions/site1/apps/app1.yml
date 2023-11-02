@@ -1,0 +1,6 @@
+app_name: app1
+app_dest: '{{ site_path }}\{{ app_name }}'
+app_pool: '{{ pool_4_64.info.name }}'
+app_repo: https://github.com/IBM/ibm.github.io.git
+app_branch: master
+top_level: true

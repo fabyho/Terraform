@@ -1,0 +1,27 @@
+---
+# Currently defining 4 app pools for each site to accommodate a variety of configurations.
+# Can add more or comment out unnecessary ones as we see fit
+- name: 32 bit .Net 2.0
+  win_iis_webapppool:
+    name: '{{ site_name }} (.NET 2.0 - 32bit)'
+    state: started
+    attributes: 'managedRuntimeVersion:v2.0|enable32BitAppOnWin64:True|managedPipelineMode:Integrated'
+  register: pool_2_32
+- name: 32 bit .Net 4.0
+  win_iis_webapppool:
+    name: '{{ site_name }} (.NET 4.0 - 32bit)'
+    state: started
+    attributes: 'managedRuntimeVersion:v4.0|enable32BitAppOnWin64:True|managedPipelineMode:Integrated'
+  register: pool_4_32
+- name: 64 bit .Net 2.0
+  win_iis_webapppool:
+    name: '{{ site_name }} (.NET 2.0 - 64bit)'
+    state: started
+    attributes: 'managedRuntimeVersion:v2.0|enable32BitAppOnWin64:False|managedPipelineMode:Integrated'
+  register: pool_2_64
+- name: 64 bit .Net 4.0
+  win_iis_webapppool:
+    name: '{{ site_name }} (.NET 4.0 - 64bit)'
+    state: started
+    attributes: 'managedRuntimeVersion:v4.0|enable32BitAppOnWin64:False|managedPipelineMode:Integrated'
+  register: pool_4_64

@@ -1,0 +1,12 @@
+# Connection variables
+ansible_user: ansible
+ansible_password: Q!wertyuiop
+ansible_port: 5986
+ansible_connection: winrm
+ansible_winrm_server_cert_validation: ignore
+
+# Directory vars
+root_path: C:\inetpub\wwwroot
+
+# Default checksum for git repos
+git_checksum: 80de82dfd57795eed1fcbc83b7a9a318eb9e3b20

@@ -1,0 +1,7 @@
+app_name: app2
+app_dest: '{{ site_path }}\dir1\{{ app_name }}'
+app_pool: '{{ pool_4_64.info.name }}'
+virtual_path: dir1/{{ app_name }}
+app_repo: https://github.com/Yelp/yelp.github.io.git
+app_branch: master
+top_level: false

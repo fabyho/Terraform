@@ -1,0 +1,41 @@
+---
+# Install the main IIS sweet
+- name: Install IIS
+  win_feature:
+    name: "Web-Server"
+    state: present
+    include_sub_features: yes
+    include_management_tools: yes
+    restart: yes
+    
+# Install chocolatey to get git
+- name: Install chocolatey
+  win_chocolatey:
+    name: chocolatey
+    state: latest
+    
+# Install git for repo cloning later
+- name: Install git
+  win_chocolatey:
+    name: git
+    state: latest
+    
+# Ensure git is in the system path
+- name: Add git to the PATH
+  win_path:
+    elements: '%SystemRoot%\Program Files\Git\bin'
+    state: present
+    
+# Get archiving tools to handle more archive types
+- name: Get PSCX msi
+  win_get_url:
+    url: '{{ pcsx_url }}'
+    dest: '{{ pcsx_path }}'
+- name: Install PCSX
+  win_msi:
+    path: '{{ pcsx_path }}'
+    wait: True
+- name: Clean up PCSX msi
+  win_file:
+    path: '{{ pcsx_path }}'
+    state: absent

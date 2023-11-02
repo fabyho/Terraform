@@ -1,0 +1,49 @@
+---
+# Grab site specific vars
+- name: Populate site local variables 
+  include_vars: roles/sites/site_definitions/{{ site_name }}/site_vars.yml
+
+# Create site specific app pools
+- name: Create app pools
+  include: create_pools.yml
+
+# Set up site directory
+- name: Create {{ site_name }} directory
+  win_file:
+    path: '{{ site_path }}'
+    state: directory
+
+# Add site to IIS
+- name: Create {{ site_name }} in IIS
+  win_iis_website:
+    name: '{{ site_name }}'
+    physical_path: '{{ site_path }}'
+    application_pool: '{{ pool_4_64.info.name }}'
+    state: started
+    ip: '{{ ip_addr }}'
+    port: '{{ port_no }}'
+    hostname: '{{ host_name }}'
+  register: website
+
+# Add local web bindings for troubleshooting
+- name: Create local web bindings for {{ site_name }}
+  win_iis_webbinding:
+    name: '{{ site_name }}'
+    host_header: localhost
+    ip: 127.0.0.1
+    port: '{{ website.site.ID + 8080 }}'
+    state: present
+
+# Add virtual directories for the site
+- name: Create virtual directories
+  include: create_virtual_dirs.yml dir_name={{ local_item.name }} dir_path={{ local_item.path }}
+  with_items: '{{ virtual_dirs }}'
+  loop_control:
+    loop_var: local_item 
+
+# Add all of the apps for the site
+- name: Create top level apps
+  include: create_apps.yml app_include={{ apps_path }}/{{ local_item }}
+  with_items: '{{ apps }}'
+  loop_control:
+    loop_var: local_item
